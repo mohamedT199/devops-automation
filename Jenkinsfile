@@ -13,7 +13,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t b3thr2/aziz:2.0 .'
+                    sh 'docker build -t b3thr2/aziz:3.0 .'
                 }
             }
         }
@@ -24,7 +24,14 @@ pipeline {
                    sh 'docker login -u ${USER} -p ${PASS}'
 
 }
-                   sh 'docker push b3thr2/aziz:2.0'
+                   sh 'docker push b3thr2/aziz:3.0'
+                }
+            }
+        }
+        stage('Deploy application '){
+            steps{
+                script{
+                    sh 'docker run -d -p 8080:8080 b3thr2/aziz:3.0'
                 }
             }
         }
